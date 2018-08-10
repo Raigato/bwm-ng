@@ -16,7 +16,7 @@ exports.auth = function (req, res) {
     }
 
     if (!user) {
-      return res.status(422).send({ errors: [{ title: 'Invalid credentials!', detail: 'Wrong email x or password!' }] })
+      return res.status(422).send({ errors: [{ title: 'Invalid credentials!', detail: 'Wrong email or password!' }] })
     }
 
     if (user.hasSamePassword(password)) {
@@ -27,7 +27,7 @@ exports.auth = function (req, res) {
 
       return res.json({ token })
     } else {
-      return res.status(422).send({ errors: [{ title: 'Invalid credentials!', detail: 'Wrong email or password x!' }] })
+      return res.status(422).send({ errors: [{ title: 'Invalid credentials!', detail: 'Wrong email or password!' }] })
     }
   })
 }
