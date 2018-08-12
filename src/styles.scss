@@ -21,6 +21,12 @@ html, body, p {
   cursor: pointer; 
 }
 
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
 .btn-bwm {
   background-color: $primary;
   border-color: $primary;
