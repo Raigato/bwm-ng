@@ -8,6 +8,7 @@ import { Booking } from '../../../booking/shared/booking.model';
 import { HelperService } from '../../../common/service/helper.service';
 import { Rental } from '../../shared/rental.model';
 import { BookingService } from '../../../booking/shared/booking.service';
+import { AuthService } from '../../../auth/shared/auth.service';
 
 @Component({
   encapsulation: ViewEncapsulation.None,
@@ -44,6 +45,7 @@ export class RentalDetailBookingComponent implements OnInit {
               private modal: NgbModal,
               private bookingService: BookingService,
               private toastr: ToastsManager,
+              public auth: AuthService,
               private vcr: ViewContainerRef) {
                 this.toastr.setRootViewContainerRef(vcr)
               }
@@ -52,7 +54,7 @@ export class RentalDetailBookingComponent implements OnInit {
     this.newBooking = new Booking()
     this.getBookedOutDates()
 
-    this.someParagraph.nativeElement.style.color = "red"
+    //this.someParagraph.nativeElement.style.color = "red"
   }
 
   private checkForInvalidDates(date) {
