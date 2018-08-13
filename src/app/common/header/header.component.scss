@@ -4,7 +4,6 @@
   padding: 20px;
   margin-bottom: 40px;
 
-
   .bwm-search {
     height: 50px;
     width: 300px;
@@ -17,6 +16,11 @@
     letter-spacing: 1px;
     color: $primary;
     font-weight: 500;
+
+    img {
+      margin-top: 15px;
+      height: 20px;
+    }
   }
 
 
