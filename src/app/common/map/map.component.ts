@@ -1,4 +1,6 @@
-import { Component, Input, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { MapService } from './map.service'
 
 @Component({
@@ -6,9 +8,12 @@ import { MapService } from './map.service'
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent {
+export class MapComponent implements OnInit, OnDestroy {
 
   @Input() location: string
+
+  @Input() locationSubject: Subject<any>
+
   isPositionError: boolean = false
 
   lat: number
@@ -17,10 +22,21 @@ export class MapComponent {
   constructor(private mapService: MapService, private ref: ChangeDetectorRef) { }
 
   ngOnInit() {
+    if (this.locationSubject) {
+      this.locationSubject.subscribe((location: string) => {
+        this.getLocation(location)
+      })
+    }
   }
 
-  mapReadyHandler() {
-    this.mapService.getGeoLocation(this.location).subscribe((coordinates) => {
+  ngOnDestroy() {
+    if (this.locationSubject) {
+      this.locationSubject.unsubscribe()
+    }
+  }
+
+  getLocation(location) {
+    this.mapService.getGeoLocation(location).subscribe((coordinates) => {
       this.lat = coordinates.lat
       this.lng = coordinates.lng
 
@@ -30,5 +46,8 @@ export class MapComponent {
       this.ref.detectChanges()
     })
   }
-
+ 
+  mapReadyHandler() {
+    this.getLocation(this.location)
+  }
 }
