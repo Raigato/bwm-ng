@@ -24,6 +24,24 @@ router.get('/manage', UserCtrl.authMiddleware, function(req, res) {
         })
 })
 
+router.get('/:id/verify-user', UserCtrl.authMiddleware, (req, res) => {
+  const user = res.locals.user
+
+  Rental.findById(req.params.id)
+        .populate('user')
+        .exec((err, foundRental) => {
+          if (err) {
+            return res.status(422).send({errors: [{title: 'Rental error!', detail: 'Could not find Rental!'}]})
+          }
+
+          if (foundRental.user.id !== user.id) {
+            return res.status(422).send({errors: [{title: 'Invalid user!', detail: 'You are not the rental\'s owner!'}]})
+          }
+
+          return res.json({status: 'verified'})
+        })
+})
+
 router.get('/:rentalId', function(req, res) {
   const rentalId = req.params.rentalId
 
@@ -37,6 +55,32 @@ router.get('/:rentalId', function(req, res) {
       
     return res.json(foundRental)
   })
+})
+
+router.patch('/:id', UserCtrl.authMiddleware, (req, res) => {
+  const rentalData = req.body
+  const user = res.locals.user
+
+  Rental.findById(req.params.id)
+        .populate('user')
+        .exec((err, foundRental) => {
+          if (err) {
+            return res.status(422).send({ errors: normalizeErrors(err.errors) })
+          }
+
+          if (foundRental.user.id !== user.id) {
+            return res.status(422).send({errors: [{title: 'Invalid user!', detail: 'You are not the rental\'s owner!'}]})
+          }
+
+          foundRental.set(rentalData)
+          foundRental.save((err) => {
+            if (err) {
+              return res.status(422).send({ errors: normalizeErrors(err.errors) })
+            }
+
+            return res.status(200).send(foundRental)
+          })
+        })
 })
 
 router.delete('/:id', UserCtrl.authMiddleware, function(req, res) {

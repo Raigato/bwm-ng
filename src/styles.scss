@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import 'variables';
+@import 'rental-detail';
 
 html, body, p {
   color: $text-primary;
@@ -19,6 +20,10 @@ html, body, p {
 
 .clickable {
   cursor: pointer; 
+}
+
+.inline {
+  display: inline-block;
 }
 
 .page-title {
@@ -96,5 +101,15 @@ html, body, p {
     background-color: rgba(0,0,0, 0.5);
     margin-top: 50px;
     letter-spacing: 1px;
+  }
+}
+
+.editable-component {
+  .btn {
+    &.btn-editable {
+      margin-left: 5px;
+      color: white;
+      font-size: 12px;
+    }
   }
 }
