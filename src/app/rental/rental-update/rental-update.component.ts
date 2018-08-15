@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { UcWordsPipe } from 'ngx-pipes';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 import { RentalService } from '../shared/rental.service'
 import { Rental } from '../shared/rental.model'
@@ -24,10 +24,8 @@ export class RentalUpdateComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private rentalService: RentalService,
               private ucwords: UcWordsPipe,
-              private toastr: ToastsManager,
-              private vcr: ViewContainerRef) {
+              private toastr: ToastrService) {
                 this.transformLocation = this.transformLocation.bind(this)
-                this.toastr.setRootViewContainerRef(vcr)
               }
 
   ngOnInit() {

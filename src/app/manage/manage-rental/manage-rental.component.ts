@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ToastsManager } from 'ng2-toastr';
+import { ToastrService } from 'ngx-toastr';
 
 import { RentalService } from '../../rental/shared/rental.service';
 import { Rental } from '../../rental/shared/rental.model';
@@ -16,10 +16,7 @@ export class ManageRentalComponent implements OnInit {
   rentalDeleteIndex: number
 
   constructor(private rentalService: RentalService,
-              private toastr: ToastsManager,
-              private vcr: ViewContainerRef) {
-                this.toastr.setRootViewContainerRef(vcr)
-              }
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.rentalService.getUserRentals().subscribe(

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Output, ViewContainerRef } from '@angular/core';
-import { ToastsManager } from 'ng2-toastr';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 import { ImageUploadService } from './image-upload.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -32,10 +32,7 @@ export class ImageUploadComponent {
   imageChangedEvent: any
 
   constructor(private imageService: ImageUploadService,
-              private toastr: ToastsManager,
-              private vcr: ViewContainerRef) {
-                this.toastr.setRootViewContainerRef(vcr)
-              }
+              private toastr: ToastrService) { }
 
   private onSuccess(imageUrl: string) {
     this.selectedFile.pending = false

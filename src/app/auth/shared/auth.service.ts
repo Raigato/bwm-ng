@@ -1,9 +1,13 @@
+
+import {map} from 'rxjs/operators';
 import { Injectable } from '@angular/core'
 import { Observable } from 'rxjs'
 import { HttpClient } from '@angular/common/http'
-import * as jwt from 'jsonwebtoken'
+import { JwtHelperService } from '@auth0/angular-jwt'
 import * as moment from 'moment'
 import 'rxjs/Rx'
+
+const jwt = new JwtHelperService()
 
 class DecodedToken {
   exp: number = 0
@@ -19,7 +23,7 @@ export class AuthService {
   }
 
   private saveToken(token: any): string {
-    this.decodedToken = jwt.decode(token.token)
+    this.decodedToken = jwt.decodeToken(token.token)
 
     localStorage.setItem('bwm_auth', token.token)
     localStorage.setItem('bwm_meta', JSON.stringify(this.decodedToken))
@@ -36,10 +40,10 @@ export class AuthService {
   }
 
   public login(userCredentials: any): Observable<any> {
-    return this.http.post('/api/v1/users/auth', userCredentials).map(
+    return this.http.post('/api/v1/users/auth', userCredentials).pipe(map(
       (token) => {
         return this.saveToken(token)
-      })
+      }))
   }
 
   public logout() {

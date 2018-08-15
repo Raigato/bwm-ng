@@ -1,3 +1,7 @@
+
+import {of as observableOf,  Observable } from 'rxjs';
+
+import {catchError, map} from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   CanActivate, Router,
@@ -6,7 +10,6 @@ import {
 } from '@angular/router';
 
 import { RentalService } from './rental.service';
-import { Observable } from 'rxjs'
 
 @Injectable()
 export class RentalGuard implements CanActivate {
@@ -17,11 +20,11 @@ export class RentalGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     const rentalId: string = route.params.rentalId
 
-    return this.rentalService.verifyRentalUser(rentalId).map(() => {
+    return this.rentalService.verifyRentalUser(rentalId).pipe(map(() => {
       return true
-    }).catch(() => {
+    }),catchError(() => {
       this.router.navigate(['/rentals/' + rentalId])
-      return Observable.of(false)
-    })
+      return observableOf(false)
+    }),)
   }
 }
