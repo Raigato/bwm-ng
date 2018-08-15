@@ -47,13 +47,8 @@
           </div>
 
           <div class="form-group">
-            <label for="image">Image</label>
-            <input type="file"
-                   name="image"
-                   class="form-control"
-                   id="image"
-                   placeholder="Upload file..."
-                   (change)="handleImageChange()">
+            <bwm-image-upload (imageUploaded)="handleImageUpload($event)"
+                              (imageError)="handleImageError($event)"></bwm-image-upload>
           </div>
 
           <div class="form-group">
@@ -103,7 +98,7 @@
                    name="shared">
           </div>
           <button (click)="createRental()"
-                  [disabled]="!rentalForm.form.valid"
+                  [disabled]="!rentalForm.form.valid || !newRental.image"
                   type="button"
                   class="btn btn-bwm">Submit
           </button>

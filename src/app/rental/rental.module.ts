@@ -20,6 +20,7 @@ import { HelperService } from '../common/service/helper.service';
 import { BookingService } from '../booking/shared/booking.service'
 
 import { EditableModule } from '../common/components/editable/editable.module';
+import { ImageUploadModule } from '../common/components/image-upload/image-upload.module';
 import { MapModule } from '../common/map/map.module'
 
 import { AuthGuard } from '../auth/shared/auth.guard'
@@ -58,7 +59,8 @@ const routes: Routes = [
     Daterangepicker,
     FormsModule,
     NgPipesModule,
-    EditableModule
+    EditableModule,
+    ImageUploadModule
   ],
   providers: [
     RentalService,
